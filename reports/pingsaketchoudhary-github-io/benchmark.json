@@ -1,0 +1,15 @@
+{
+  "repo_name": "target_repo",
+  "target_path": "/tmp/sentrix_benchmarks/target_repo",
+  "total_files": 105,
+  "lines_of_code": 15673,
+  "total_functions": 9,
+  "graph_nodes": 178,
+  "graph_edges": 184,
+  "initial_analysis_ms": 1052,
+  "incremental_analysis_ms": 0,
+  "security_findings_count": 0,
+  "hotspots_count": 3,
+  "architecture_pattern": "ModularMonolith",
+  "timestamp": "2026-08-24T06:02:42.252614010+00:00"
+}

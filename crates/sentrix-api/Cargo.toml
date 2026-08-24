@@ -1,0 +1,24 @@
+[package]
+name = "sentrix-api"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+sentrix-core.workspace = true
+sentrix-ir.workspace = true
+sentrix-graph.workspace = true
+sentrix-analysis.workspace = true
+sentrix-security.workspace = true
+sentrix-impact.workspace = true
+sentrix-search.workspace = true
+sentrix-ai.workspace = true
+sentrix-evolution.workspace = true
+axum.workspace = true
+tower-http.workspace = true
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+chrono.workspace = true

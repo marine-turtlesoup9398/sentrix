@@ -1,0 +1,42 @@
+{
+  "product": "SENTRIX",
+  "version": "1.0.0",
+  "build_timestamp": "2026-08-24T12:55:00Z",
+  "platforms": {
+    "x86_64-unknown-linux-gnu": {
+      "status": "VERIFIED",
+      "runner": "Ubuntu 22.04 / Linux 6.x x86_64",
+      "binary_path": "target/release/sentrix",
+      "artifact_name": "sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz",
+      "checksum": "f79aac3b2670718d76d8e80716898e3ca2a79e866603d86d51a85d3a9d84913c"
+    },
+    "aarch64-unknown-linux-gnu": {
+      "status": "BUILD NOT VERIFIED",
+      "runner": "GitHub Actions ubuntu-latest (Cross-target)",
+      "binary_path": "target/aarch64-unknown-linux-gnu/release/sentrix",
+      "artifact_name": "sentrix-v1.0.0-aarch64-unknown-linux-gnu.tar.gz",
+      "checksum": null
+    },
+    "aarch64-apple-darwin": {
+      "status": "BUILD NOT VERIFIED",
+      "runner": "GitHub Actions macos-latest",
+      "binary_path": "target/aarch64-apple-darwin/release/sentrix",
+      "artifact_name": "sentrix-v1.0.0-aarch64-apple-darwin.tar.gz",
+      "checksum": null
+    },
+    "x86_64-apple-darwin": {
+      "status": "BUILD NOT VERIFIED",
+      "runner": "GitHub Actions macos-13",
+      "binary_path": "target/x86_64-apple-darwin/release/sentrix",
+      "artifact_name": "sentrix-v1.0.0-x86_64-apple-darwin.tar.gz",
+      "checksum": null
+    },
+    "x86_64-pc-windows-msvc": {
+      "status": "BUILD NOT VERIFIED",
+      "runner": "GitHub Actions windows-latest",
+      "binary_path": "target/x86_64-pc-windows-msvc/release/sentrix.exe",
+      "artifact_name": "sentrix-v1.0.0-x86_64-pc-windows-msvc.zip",
+      "checksum": null
+    }
+  }
+}

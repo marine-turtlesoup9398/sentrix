@@ -1,0 +1,28 @@
+[project]
+name = "SENTRIX Platform"
+
+[analysis]
+threads = 0
+exclude_patterns = [
+    "**/node_modules/**",
+    "**/target/**",
+    "**/.git/**",
+    "**/dist/**",
+]
+max_file_size_mb = 10
+
+[security]
+enabled = true
+entropy_threshold = 4.5
+
+[git]
+history_depth = 500
+
+[ai]
+enabled = false
+provider = "local"
+model = "gpt-4o-mini"
+
+[server]
+host = "127.0.0.1"
+port = 7070

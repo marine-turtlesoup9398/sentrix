@@ -1,0 +1,36 @@
+[package]
+name = "sentrix-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "sentrix"
+path = "src/main.rs"
+
+[dependencies]
+sentrix-core.workspace = true
+sentrix-ir.workspace = true
+sentrix-parser.workspace = true
+sentrix-graph.workspace = true
+sentrix-storage.workspace = true
+sentrix-git.workspace = true
+sentrix-analysis.workspace = true
+sentrix-security.workspace = true
+sentrix-impact.workspace = true
+sentrix-search.workspace = true
+sentrix-ai.workspace = true
+sentrix-evolution.workspace = true
+sentrix-api.workspace = true
+
+anyhow.workspace = true
+git2.workspace = true
+clap.workspace = true
+colored.workspace = true
+tokio.workspace = true
+rayon.workspace = true
+ignore.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true

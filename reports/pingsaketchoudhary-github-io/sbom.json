@@ -1,0 +1,744 @@
+{
+  "bom_format": "CycloneDX",
+  "spec_version": "1.5",
+  "serial_number": "urn:uuid:18ceaca56ff866cb",
+  "timestamp": "2026-08-24T07:18:48.660797853+00:00",
+  "components": [
+    {
+      "name": "tsconfig.json",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"json\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "tailwind.config.mjs",
+      "version": "0.1.0",
+      "ecosystem": "JavaScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/utils/urlHelpers.ts",
+      "version": "0.1.0",
+      "ecosystem": "TypeScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/utils/seo.ts",
+      "version": "0.1.0",
+      "ecosystem": "TypeScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/utils/readingTime.ts",
+      "version": "0.1.0",
+      "ecosystem": "TypeScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/utils/ogImage.ts",
+      "version": "0.1.0",
+      "ecosystem": "TypeScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/styles/tokens/typography.css",
+      "version": "0.1.0",
+      "ecosystem": "Css",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/styles/tokens/motion.css",
+      "version": "0.1.0",
+      "ecosystem": "Css",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/styles/tokens/index.css",
+      "version": "0.1.0",
+      "ecosystem": "Css",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/styles/tokens/colors.css",
+      "version": "0.1.0",
+      "ecosystem": "Css",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/styles/tokens/borders.css",
+      "version": "0.1.0",
+      "ecosystem": "Css",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/styles/theme.css",
+      "version": "0.1.0",
+      "ecosystem": "Css",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/styles/global.css",
+      "version": "0.1.0",
+      "ecosystem": "Css",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/speaking.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/search.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/rss.xml.ts",
+      "version": "0.1.0",
+      "ecosystem": "TypeScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/resume.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/research/index.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/research/[slug].astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/projects/index.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/projects/[slug].astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/offline.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/index.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/docs/index.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/docs/[...slug].astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/contact.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/blog/index.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/blog/[slug].astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/about.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/500.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/pages/404.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/layouts/PageLayout.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/layouts/ErrorLayout.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/layouts/DocsLayout.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/layouts/BaseLayout.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/layouts/ArticleLayout.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/i18n/utils.ts",
+      "version": "0.1.0",
+      "ecosystem": "TypeScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/i18n/ui.ts",
+      "version": "0.1.0",
+      "ecosystem": "TypeScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/timeline/national-pride-award.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/speaking/cybersecurity-keynote.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/research/zero-telemetry-rust-systems.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/research/adversarial-prompt-injection-defenses.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/projects/vulnsightai.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/projects/password-generator.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/projects/ira-security-guardian-releases.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/projects/hackermode.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/projects/atlas.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/docs/vulnsightai-quickstart.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/docs/overview.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/docs/atlas-configuration.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/changelog/v1-0-0.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/blog/memory-safe-cli-architecture-rust.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content/blog/building-zero-trust-ai-agent-runtimes.mdx",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"mdx\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/content.config.ts",
+      "version": "0.1.0",
+      "ecosystem": "TypeScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/vectors/VulnSightVector.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/vectors/AtlasVector.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/VentureGrid.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/TerminalSimulator.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/ResearchCard.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/ProjectVectorDiagram.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/ProjectTerminalDemo.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/ProjectCard.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/KernelInspector.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/InteractiveGlassMatrix.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/HeroEngineering.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/CodeBlock.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/AnimatedToolMarquee.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/modules/AboutInteractiveStack.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/layout/Navigation.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/layout/Header.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/layout/Footer.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/core/SloganTattoo.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/core/SkipLink.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/core/SectionHeader.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/core/Preloader.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/core/Container.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/core/Card.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/core/Button.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "src/components/core/Badge.astro",
+      "version": "0.1.0",
+      "ecosystem": "Astro",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "public/saket_public_key.asc",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"asc\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "public/robots.txt",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"txt\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "public/_headers",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"text\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "package.json",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"json\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "package-lock.json",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"json\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "generate_resume_pdf.py",
+      "version": "0.1.0",
+      "ecosystem": "Python",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/discovery/VISUAL_LANGUAGE.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/discovery/USER_EXPERIENCE_PLAN.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/discovery/IDENTITY_REPORT.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/SITE_ARCHITECTURE.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/SEO_STRATEGY.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/ROUTES.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/PERFORMANCE_STRATEGY.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/INFORMATION_ARCHITECTURE.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/IMPLEMENTATION_ROADMAP.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/GITHUB_PAGES_STRATEGY.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/FOLDER_STRUCTURE.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/ENGINEERING_DECISIONS.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/DESIGN_SYSTEM.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/DEPLOYMENT_PLAN.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/CONTENT_MODEL.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "docs/architecture/COMPONENT_TREE.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "astro.config.mjs",
+      "version": "0.1.0",
+      "ecosystem": "JavaScript",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": "README.md",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"md\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": ".gitignore",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"text\")",
+      "license": "MIT",
+      "purl": null
+    },
+    {
+      "name": ".github/workflows/deploy.yml",
+      "version": "0.1.0",
+      "ecosystem": "Unknown(\"yml\")",
+      "license": "MIT",
+      "purl": null
+    }
+  ],
+  "license_audit_warning": "License metadata extracted automatically from package manifests requires legal review."
+}

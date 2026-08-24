@@ -1,0 +1,46 @@
+{
+  "product": "SENTRIX — Software Intelligence & Engineering Risk Explorer",
+  "version": "1.0.0",
+  "commit_sha": "LOCAL_WORKSPACE_BUILD",
+  "release_status": "APPROVED FOR RELEASE WITH DOCUMENTED LIMITATIONS",
+  "certification_timestamp": "2026-08-24T12:56:00Z",
+  "quality_gates": {
+    "cargo_fmt": "PASS",
+    "cargo_check": "PASS",
+    "cargo_test": "PASS",
+    "cargo_clippy": "PASS",
+    "cargo_build_release": "PASS",
+    "frontend_build": "PASS"
+  },
+  "tests_summary": {
+    "total_executed": 37,
+    "passed": 37,
+    "failed": 0,
+    "ignored": 0,
+    "pass_rate": "100%"
+  },
+  "release_artifact": {
+    "binary_path": "target/release/sentrix",
+    "target_triple": "x86_64-unknown-linux-gnu",
+    "sha256_checksum": "f79aac3b2670718d76d8e80716898e3ca2a79e866603d86d51a85d3a9d84913c"
+  },
+  "real_target_benchmark": {
+    "target_url": "https://github.com/pingsaketchoudhary/pingsaketchoudhary.github.io",
+    "total_files": 105,
+    "lines_of_code": 15673,
+    "total_functions": 23,
+    "graph_nodes": 302,
+    "graph_edges": 477,
+    "initial_analysis_ms": 199,
+    "incremental_analysis_ms": 1,
+    "cache_hit_ms": 0,
+    "architecture_pattern": "StaticSite"
+  },
+  "platform_matrix": {
+    "x86_64-unknown-linux-gnu": "VERIFIED",
+    "aarch64-unknown-linux-gnu": "BUILD NOT VERIFIED",
+    "aarch64-apple-darwin": "BUILD NOT VERIFIED",
+    "x86_64-apple-darwin": "BUILD NOT VERIFIED",
+    "x86_64-pc-windows-msvc": "BUILD NOT VERIFIED"
+  }
+}

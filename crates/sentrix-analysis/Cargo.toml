@@ -1,0 +1,26 @@
+[package]
+name = "sentrix-analysis"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+sentrix-core.workspace = true
+sentrix-ir.workspace = true
+sentrix-parser.workspace = true
+sentrix-graph.workspace = true
+sentrix-security.workspace = true
+sentrix-git.workspace = true
+petgraph.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+ignore.workspace = true
+chrono.workspace = true
+
+[dev-dependencies]
+sentrix-impact.workspace = true
+sentrix-search.workspace = true
+sentrix-ai.workspace = true
+tokio.workspace = true

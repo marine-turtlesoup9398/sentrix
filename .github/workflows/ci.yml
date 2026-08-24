@@ -1,0 +1,48 @@
+name: SENTRIX CI Quality Pipeline
+
+on:
+  push:
+    branches: [ main, release/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Workspace Tests & Quality Gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Rust Code Formatting Check
+        run: cargo fmt --all -- --check
+
+      - name: Workspace Compilation Check
+        run: cargo check --workspace
+
+      - name: Workspace Unit & Integration Tests
+        run: cargo test --workspace
+
+      - name: Clippy Lints Audit
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+      - name: Frontend Production Vite Build
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+
+      - name: Production Release Binary Build
+        run: cargo build --release
+
+      - name: Generate Release Checksums
+        run: sha256sum target/release/sentrix > SHA256SUMS

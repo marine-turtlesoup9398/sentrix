@@ -1,0 +1,1 @@
+{"co_changes":[],"patterns":[],"summary":{"bugfix_commits_count":0,"files_tracked":5,"revert_commits_count":0,"top_changed_files":[["src/layouts/BaseLayout.astro",2],["src/components/modules/HeroEngineering.astro",1],["package.json",1],["README.md",1],["package-lock.json",1]],"total_authors":1,"total_commits":6}}

@@ -1,0 +1,31 @@
+# Rust build artifacts
+target/
+**/*.rs.bk
+*.rmeta
+
+# Node / Frontend build artifacts
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# SENTRIX local database & cache
+.sentrix/
+*.db
+*.sqlite
+
+# Environment variables & secrets
+.env
+.env.*
+*.pem
+*.key
+
+# IDE / OS junk files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.tmp
+
+# Benchmark temporary clones
+/tmp/sentrix_benchmarks/

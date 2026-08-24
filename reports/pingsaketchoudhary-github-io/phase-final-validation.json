@@ -1,0 +1,23 @@
+{
+  "repo_name": "target_repo",
+  "target_path": "/tmp/sentrix_benchmarks/target_repo",
+  "total_files": 105,
+  "lines_of_code": 15673,
+  "total_functions": 23,
+  "graph_nodes": 302,
+  "graph_edges": 477,
+  "initial_analysis_ms": 188,
+  "incremental_mode": "reanalysis",
+  "cache_hit": false,
+  "changed_files": 1,
+  "reparsed_files": 1,
+  "invalidated_nodes": 1,
+  "recomputed_nodes": 1,
+  "recomputed_edges": 1,
+  "incremental_analysis_ms": 1,
+  "cache_hit_ms": 0,
+  "security_findings_count": 0,
+  "hotspots_count": 3,
+  "architecture_pattern": "StaticSite",
+  "timestamp": "2026-08-24T07:18:44.025093345+00:00"
+}

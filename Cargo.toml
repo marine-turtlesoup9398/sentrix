@@ -1,0 +1,67 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/sentrix-core",
+    "crates/sentrix-ir",
+    "crates/sentrix-parser",
+    "crates/sentrix-graph",
+    "crates/sentrix-storage",
+    "crates/sentrix-git",
+    "crates/sentrix-analysis",
+    "crates/sentrix-security",
+    "crates/sentrix-impact",
+    "crates/sentrix-search",
+    "crates/sentrix-ai",
+    "crates/sentrix-evolution",
+    "crates/sentrix-api",
+    "crates/sentrix-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["SENTRIX Core Team"]
+license = "MIT"
+repository = "https://github.com/sentrix-ai/sentrix"
+
+[workspace.dependencies]
+tokio = { version = "1.43.0", features = ["full"] }
+rayon = "1.10.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2.0"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+rusqlite = { version = "0.33", features = ["bundled"] }
+petgraph = "0.7"
+git2 = { version = "0.20", features = ["vendored-openssl"] }
+axum = { version = "0.8", features = ["ws"] }
+tower-http = { version = "0.6", features = ["cors", "fs", "trace"] }
+clap = { version = "4.5", features = ["derive", "env"] }
+colored = "3.0"
+ignore = "0.4"
+sha2 = "0.10"
+regex = "1.11"
+chrono = { version = "0.4", features = ["serde"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+tree-sitter = "0.25"
+tree-sitter-python = "0.23"
+tree-sitter-typescript = "0.23"
+tree-sitter-go = "0.23"
+tree-sitter-rust = "0.23"
+
+# Local workspace crate references
+sentrix-core = { path = "crates/sentrix-core" }
+sentrix-ir = { path = "crates/sentrix-ir" }
+sentrix-parser = { path = "crates/sentrix-parser" }
+sentrix-graph = { path = "crates/sentrix-graph" }
+sentrix-storage = { path = "crates/sentrix-storage" }
+sentrix-git = { path = "crates/sentrix-git" }
+sentrix-analysis = { path = "crates/sentrix-analysis" }
+sentrix-security = { path = "crates/sentrix-security" }
+sentrix-impact = { path = "crates/sentrix-impact" }
+sentrix-search = { path = "crates/sentrix-search" }
+sentrix-ai = { path = "crates/sentrix-ai" }
+sentrix-evolution = { path = "crates/sentrix-evolution" }
+sentrix-api = { path = "crates/sentrix-api" }

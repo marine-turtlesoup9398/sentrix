@@ -1,0 +1,23 @@
+{
+  "benchmark_environment": {
+    "os": "Linux x86_64",
+    "cpu_architecture": "x86_64",
+    "build_profile": "release",
+    "rust_version": "stable",
+    "timestamp": "2026-08-24T12:35:14Z"
+  },
+  "metrics": {
+    "target_repo_url": "https://github.com/pingsaketchoudhary/pingsaketchoudhary.github.io",
+    "total_files": 105,
+    "lines_of_code": 15673,
+    "total_functions": 23,
+    "graph_nodes": 302,
+    "graph_edges": 477,
+    "initial_analysis_ms": 180,
+    "incremental_analysis_ms": 1,
+    "cache_hit_ms": 0,
+    "architecture_pattern": "StaticSite",
+    "security_findings_count": 0,
+    "hotspots_count": 3
+  }
+}
