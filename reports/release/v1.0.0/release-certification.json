@@ -1,9 +1,11 @@
 {
   "product": "SENTRIX — Software Intelligence & Engineering Risk Explorer",
   "version": "1.0.0",
-  "commit_sha": "50d6981a3d83713f52a2065ef69c73bbc9ce4141",
+  "commit_sha": "e134550aff34552e4944b1f035fefc2ae0f7c121",
+  "github_repo_url": "https://github.com/pingsaketchoudhary/sentrix",
+  "github_release_url": "https://github.com/pingsaketchoudhary/sentrix/releases/tag/v1.0.0",
   "release_status": "APPROVED FOR RELEASE WITH DOCUMENTED LIMITATIONS",
-  "certification_timestamp": "2026-08-24T13:07:40Z",
+  "certification_timestamp": "2026-08-24T13:08:48Z",
   "quality_gates": {
     "cargo_fmt": "PASS",
     "cargo_check": "PASS",
@@ -21,8 +23,10 @@
   },
   "release_artifact": {
     "binary_path": "target/release/sentrix",
+    "archive_name": "sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz",
     "target_triple": "x86_64-unknown-linux-gnu",
-    "sha256_checksum": "f79aac3b2670718d76d8e80716898e3ca2a79e866603d86d51a85d3a9d84913c"
+    "binary_sha256": "f79aac3b2670718d76d8e80716898e3ca2a79e866603d86d51a85d3a9d84913c",
+    "archive_sha256": "ffd797de677ac624c278470cd44676714c642da804f243d571b725930a8a6b37"
   },
   "real_target_benchmark": {
     "target_url": "https://github.com/pingsaketchoudhary/pingsaketchoudhary.github.io",
