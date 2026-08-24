@@ -1,7 +1,7 @@
 {
   "product": "SENTRIX - Software Intelligence & Engineering Risk Explorer",
   "version": "1.0.1",
-  "commit_sha": "PENDING_COMMIT",
+  "commit_sha": "40e0208f236e3c95fe45d4c750da27a1f3f82bee",
   "github_repo_url": "https://github.com/pingsaketchoudhary/sentrix",
   "github_release_url": "https://github.com/pingsaketchoudhary/sentrix/releases/tag/v1.0.1",
   "release_status": "APPROVED FOR RELEASE WITH DOCUMENTED LIMITATIONS",
