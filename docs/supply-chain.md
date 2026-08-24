@@ -1,6 +1,6 @@
 # SENTRIX Supply-Chain & Dependency Audit
 
-Supply-chain security and SBOM specification for **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Supply-chain security and SBOM specification for **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

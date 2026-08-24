@@ -1,6 +1,6 @@
 # SENTRIX Installation & Uninstallation Guide
 
-Installation, upgrade, and uninstallation guide for **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Installation, upgrade, and uninstallation guide for **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

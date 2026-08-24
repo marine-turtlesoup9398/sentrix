@@ -1,4 +1,4 @@
-# SENTRIX Phase 6 — Final Production Certification Report
+# SENTRIX Phase 6 - Final Production Certification Report
 
 Executive Production Distribution & Release Certification Report for **SENTRIX v1.0.0**.
 
@@ -14,13 +14,13 @@ SENTRIX Phase 6 establishes a production-grade distribution framework, multi-run
 
 | Quality Gate | Command Executed | Exit Code | Result & Evidence |
 |---|---|---|---|
-| **Formatting** | `cargo fmt --all -- --check` | `0` | **PASS** — 0 formatting errors. |
-| **Workspace Compilation** | `cargo check --workspace` | `0` | **PASS** — 0 compiler errors, 0 warnings. |
-| **Workspace Unit/E2E Tests** | `cargo test --workspace` | `0` | **PASS** — 37 passed, 0 failed. |
-| **Clippy Lints** | `cargo clippy --workspace --all-targets --all-features -- -D warnings` | `0` | **PASS** — 0 clippy warnings. |
-| **Release Compilation** | `cargo build --release` | `0` | **PASS** — Target release binary produced in 4.52s. |
-| **Frontend Production Build** | `cd frontend && npm run build` | `0` | **PASS** — Built in 930 ms. |
-| **Real Target Benchmark** | `./target/release/sentrix --json benchmark /tmp/sentrix_benchmarks/target_repo` | `0` | **PASS** — 105 files, 15,673 LOC, 302 nodes analyzed in 199 ms. |
+| **Formatting** | `cargo fmt --all -- --check` | `0` | **PASS** - 0 formatting errors. |
+| **Workspace Compilation** | `cargo check --workspace` | `0` | **PASS** - 0 compiler errors, 0 warnings. |
+| **Workspace Unit/E2E Tests** | `cargo test --workspace` | `0` | **PASS** - 37 passed, 0 failed. |
+| **Clippy Lints** | `cargo clippy --workspace --all-targets --all-features -- -D warnings` | `0` | **PASS** - 0 clippy warnings. |
+| **Release Compilation** | `cargo build --release` | `0` | **PASS** - Target release binary produced in 4.52s. |
+| **Frontend Production Build** | `cd frontend && npm run build` | `0` | **PASS** - Built in 930 ms. |
+| **Real Target Benchmark** | `./target/release/sentrix --json benchmark /tmp/sentrix_benchmarks/target_repo` | `0` | **PASS** - 105 files, 15,673 LOC, 302 nodes analyzed in 199 ms. |
 
 ---
 
@@ -28,7 +28,7 @@ SENTRIX Phase 6 establishes a production-grade distribution framework, multi-run
 
 | Target Triple | Status | Verification Environment |
 |---|---|---|
-| `x86_64-unknown-linux-gnu` | **VERIFIED** | Ubuntu 22.04 / Linux 6.x x86_64 — All quality gates PASS |
+| `x86_64-unknown-linux-gnu` | **VERIFIED** | Ubuntu 22.04 / Linux 6.x x86_64 - All quality gates PASS |
 | `aarch64-unknown-linux-gnu` | **BUILD NOT VERIFIED** | Environment unavailable |
 | `aarch64-apple-darwin` | **BUILD NOT VERIFIED** | Environment unavailable |
 | `x86_64-apple-darwin` | **BUILD NOT VERIFIED** | Environment unavailable |

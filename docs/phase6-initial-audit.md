@@ -1,4 +1,4 @@
-# SENTRIX Phase 6 — Initial Repository Audit
+# SENTRIX Phase 6 - Initial Repository Audit
 
 Full codebase reconciliation and implementation-vs-documentation verification for **SENTRIX v1.0.0**.
 

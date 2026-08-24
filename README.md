@@ -1,189 +1,230 @@
-# SENTRIX — Software Intelligence & Engineering Risk Explorer
+# SENTRIX - Software Intelligence & Engineering Risk Explorer
 
-SENTRIX is a local-first software intelligence and engineering risk analysis platform designed to analyze software repositories into structured, queryable knowledge graph models. It combines static AST parsing, graph dependency traversal, architecture drift detection, historical Git evolution analysis, secret scanning, and evidence-grounded reasoning.
+[![CI](https://github.com/pingsaketchoudhary/sentrix/actions/workflows/ci.yml/badge.svg)](https://github.com/pingsaketchoudhary/sentrix/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/pingsaketchoudhary/sentrix)](https://github.com/pingsaketchoudhary/sentrix/releases/tag/v1.0.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+SENTRIX is a local-first static software analysis and engineering intelligence tool. It parses source code repositories into a Software Intermediate Representation (SIR) and builds an in-memory Software Knowledge Graph. Analysis engines operate on this representation to analyze system relationships, execution paths, architecture boundaries, dependency blast radius, historical change evolution, and security risk.
 
 ---
 
-## Problem Statement
+## Overview
 
-A software repository is a living system of dependencies, execution paths, architectural boundaries, historical churn, and engineering risk. Standard static scanners often present file-level metrics without analyzing system-wide relationships, component blast radius, or historical change co-occurrences.
+Software repositories contain complex structural and historical relationships that are difficult to evaluate from individual source files. SENTRIX analyzes source code and Git commit logs to produce structured software intelligence without executing target repository code.
 
-SENTRIX parses multi-language codebases into a Software Intermediate Representation (SIR) and builds an in-memory Software Knowledge Graph. This graph enables deterministic intelligence calculations, including call-graph ripple analysis, architecture rule enforcement, contribution concentration tracking, and call-graph backed test recommendations.
+The core design principle is static analysis isolation: target repositories are treated as untrusted data inputs. SENTRIX does not execute build scripts, package manifests, Makefiles, setup scripts, or binaries from target repositories.
 
 ---
 
 ## Core Capabilities
 
-- **Static Repository Analysis**: Pure static AST parsing across 10 programming languages and markup formats. Zero target repository code execution.
-- **Software Knowledge Graph**: Petgraph `DiGraph` model with Tarjan strongly connected component cycle detection, PageRank centrality, and shortest-path evidence chains.
-- **Architecture Intelligence**: Automated pattern detection (`ModularMonolith`, `FrontendBackendSeparated`, `Microservices`, `StaticSite`) and rule-based architecture drift enforcement.
-- **Dependency Blast Radius**: Call-graph ripple calculation determining direct and transitive downstream impact of proposed file or symbol changes.
-- **Git Churn & Evolution Engine**: Historical commit log mining for symbol evolution histories, co-change pattern pairs, and contributor concentration metrics.
-- **Predictive Change Risk**: Feature-weighted deterministic risk evaluation (`LOW`, `MEDIUM`, `HIGH`) combining structural impact radius, security sensitivity, historical churn, and co-change propagation.
-- **Test Recommendation Engine**: Call-graph and co-change analysis to recommend relevant test files to re-run following target code modifications.
-- **Security & Secret Scanning**: Regex-based entropy and pattern scanner for credentials, tokens, and private keys, paired with intra-file data-flow taint tracking.
-- **Prompt Injection Defense**: Sanitizes untrusted repository source code and commit messages before feeding context into optional AI models.
-- **Software Bill of Materials (SBOM)**: CycloneDX v1.5 / SPDX machine-readable SBOM JSON export (`sentrix sbom`).
-- **Grounded AI Layer**: Optional AI provider abstraction (`local`, `openai`, `anthropic`). AI acts solely as an evidence explainer layer with `"Insufficient evidence"` fallback when grounding requirements are unmet.
-- **Interfaces**: Single binary CLI with structured exit codes, Axum REST API server (`127.0.0.1:7070`), and React/TypeScript web dashboard.
+- Static Repository Analysis: Multi-language AST parsing using Tree-sitter for 10 languages and markup formats.
+- Software Knowledge Graph: In-memory directed graph using Petgraph with Tarjan strongly connected component cycle detection and PageRank centrality.
+- Architecture Intelligence: Automated pattern discovery (ModularMonolith, FrontendBackendSeparated, Microservices, StaticSite) and rule-based architecture drift detection.
+- Change Impact Analysis: Call-graph ripple calculation determining direct and transitive downstream impact of file or symbol changes.
+- Git Evolution Engine: Historical commit log mining for symbol evolution tracking, co-change pattern mining, and contribution concentration metrics.
+- Predictive Change Risk: Feature-weighted deterministic risk evaluation (LOW, MEDIUM, HIGH) combining structural impact radius, security sensitivity, historical churn, and co-change propagation.
+- Test Recommendation Engine: Call-graph and co-change analysis linking changed components to relevant test suites.
+- Security and Secret Scanning: Pattern scanner for hardcoded credentials, API keys, and private keys, paired with intra-file data-flow taint analysis.
+- Prompt Injection Defense: Sanitizes untrusted repository source code and commit messages before passing context to optional AI models.
+- Software Bill of Materials (SBOM): CycloneDX v1.5 and SPDX machine-readable SBOM JSON generation.
+- Grounded AI Layer: Optional AI provider integration (local, openai, anthropic). AI operates strictly as an explanation layer with an insufficient evidence fallback.
+- User Interfaces: Single binary CLI with structured exit codes, Axum REST API server (127.0.0.1:7070), and React/TypeScript web dashboard.
 
 ---
 
-## Security Model & Invariants
+## Processing Pipeline
 
-1. **Target Repositories are Untrusted Input**: SENTRIX never executes target repository build scripts, package scripts, Makefiles, setup scripts, Dockerfiles, or arbitrary binaries. All analysis is strictly static.
-2. **Local-First Architecture**: SIR data, Knowledge Graph nodes, and local state are stored in `.sentrix/cache.db`. No automated telemetry or phone-home mechanisms exist.
-3. **Deterministic Authority**: Deterministic engines remain authoritative over analysis results. The optional AI layer cannot override evidence, execute commands, or modify files.
-4. **Local API Network Boundary**: The Axum REST server binds to `127.0.0.1:7070` by default.
+```
+Repository Source Files and Git Logs
+                 |
+   Tree-sitter AST and Pattern Parsers
+                 |
+Software Intermediate Representation (SIR)
+                 |
+  Software Knowledge Graph (Petgraph DiGraph)
+   * Tarjan Cycle Detection and PageRank
+   * Architecture Drift Detection
+   * Change Impact Blast Radius
+   * Evolution and Co-Change Mining
+   * Secret and Data-Flow Scanner
+                 |
+  CLI  |  Axum REST API  |  React Web GUI
+                 |
+  Optional AI Explanation Layer (Local / Cloud)
+```
+
+Deterministic analysis engines are authoritative. The optional AI layer translates retrieved evidence into natural language and returns an explicit insufficient evidence fallback when grounding criteria are not met.
 
 ---
 
 ## Supported Languages
 
-| Language / Format | Parsing Strategy | Extracted Symbols & Features |
+| Language or Format | Parsing Strategy | Extracted Symbols and Features |
 |---|---|---|
-| **Rust** | Tree-sitter AST | Functions, Structs, Enums, Traits, Use imports, API routes |
-| **TypeScript / JavaScript** | Tree-sitter AST | Functions, Classes, Arrow functions, ESM/CJS imports, Express/Fastify endpoints |
-| **Python** | Tree-sitter AST | Functions, Async defs, Classes, Imports, FastAPI/Flask routes |
-| **Go** | Tree-sitter AST | Functions, Methods, Structs, Interfaces, Package imports |
-| **Java** | Static Pattern Extractor | Classes, Methods, Package imports, Spring routes |
-| **C / C++** | Static Pattern Extractor | Functions, Structs, Includes |
-| **HTML / CSS** | Static Pattern Extractor | Script src links, Stylesheet hrefs, @import statements |
-| **Liquid / Astro** | Static Pattern Extractor | Component inclusions, Frontmatter scripts |
+| Rust | Tree-sitter AST | Functions, Structs, Enums, Traits, Use imports, API routes |
+| JavaScript / TypeScript | Tree-sitter AST | Functions, Classes, Arrow functions, ESM/CJS imports, Web endpoints |
+| Python | Tree-sitter AST | Functions, Async defs, Classes, Imports, FastAPI/Flask routes |
+| Go | Tree-sitter AST | Functions, Methods, Structs, Interfaces, Package imports |
+| Java | Pattern Extractor | Classes, Methods, Package imports, Spring routes |
+| C / C++ | Pattern Extractor | Functions, Structs, Includes |
+| HTML / CSS | Pattern Extractor | Script src links, Stylesheet hrefs, @import statements |
+| Liquid / Astro | Pattern Extractor | Component inclusions, Frontmatter scripts |
 
 ---
 
-## System Architecture
+## Security Model
 
-```
-Target Repository Files & Git History
-                 ↓
-   Tree-sitter AST & Pattern Extractors
-                 ↓
-Software Intermediate Representation (SIR)
-                 ↓
-  Software Knowledge Graph (Petgraph DiGraph)
-   ├── Tarjan Cycle Engine & PageRank Centrality
-   ├── Architecture Drift Engine
-   ├── Change Impact Blast Radius Calculator
-   ├── Evolution & Co-Change Mining Engine
-   └── Secret & Data-Flow Security Scanner
-                 ↓
-  CLI  |  Axum REST API  |  React Web Dashboard
-```
+1. Target Repositories as Untrusted Data: SENTRIX does not execute target build scripts, npm scripts, Makefiles, setup.py, Cargo build.rs, Dockerfiles, or target binaries.
+2. Local-First Operation: All SIR state, graph models, and database files remain on local disk in `.sentrix/cache.db`. No automated telemetry or phone-home mechanisms exist.
+3. Local REST API Boundary: The Axum REST server binds to `127.0.0.1:7070` by default. Request payload limits and CORS restrictions protect API routes.
+4. Secret Redaction: Credentials and private keys are redacted before persistence and display.
+5. Prompt Injection Defense: Untrusted repository content is filtered to neutralize prompt override commands before transport to optional AI providers.
 
 ---
 
 ## Installation
 
-### Linux x86_64 Standalone Binary
+### Linux x86_64 Prebuilt Binary
+
+Download the official release archive from GitHub:
 
 ```bash
-# Build release binary from source
-cargo build --release
+# Download release archive
+curl -LO https://github.com/pingsaketchoudhary/sentrix/releases/download/v1.0.0/sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz
 
-# Copy executable to standard user binary directory
-mkdir -p ~/.local/bin
-cp target/release/sentrix ~/.local/bin/
+# Extract binary
+tar -xzf sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz
 
-# Ensure ~/.local/bin is in your PATH
-export PATH="$HOME/.local/bin:$PATH"
+# Install binary to /usr/local/bin
+sudo install -m 0755 sentrix /usr/local/bin/sentrix
 
 # Verify installation
 sentrix --version
 ```
 
-### Build Requirements
-- Rust toolchain `1.85+` (`cargo`, `rustc`)
-- Node.js `20.x` and `npm` (for Web GUI dashboard build)
+### Source Build
+
+Build from source using Cargo:
+
+```bash
+# Clone repository
+git clone https://github.com/pingsaketchoudhary/sentrix.git
+cd sentrix
+
+# Build release binary
+cargo build --release
+
+# Install binary
+sudo install -m 0755 target/release/sentrix /usr/local/bin/sentrix
+```
 
 ---
 
-## Quickstart & Usage
+## Quick Start
 
-### 1. Repository Analysis
-Run a complete static scan of a local repository:
+### Scan Repository
+
+Run a static analysis scan on a local repository:
 
 ```bash
 sentrix analyze /path/to/repository
 ```
 
-Output as JSON:
+Run scan with JSON output:
+
 ```bash
 sentrix --json analyze /path/to/repository
 ```
 
-### 2. Configuration Validation
-Validate local `sentrix.toml` configuration:
+### Validate Configuration
+
+Validate `sentrix.toml` configuration:
 
 ```bash
 sentrix config validate
 ```
 
-### 3. Engineering Risk & Hotspots
-Display risk hotspots and maintainability metrics:
+### Risk and Hotspots
+
+Display engineering risk hotspots:
 
 ```bash
 sentrix risk /path/to/repository
 ```
 
-### 4. Architecture Drift Detection
-Check layer rule violations against `sentrix.toml` rules:
+### Architecture Drift
+
+Detect architecture rule violations:
 
 ```bash
 sentrix drift /path/to/repository
 ```
 
-### 5. Change Impact Blast Radius & Test Recommendations
-Calculate affected components and recommended tests for a file or revision range:
+### Change Impact and Test Recommendations
+
+Compute blast radius and recommended test files for a component:
 
 ```bash
 sentrix impact src/services/auth_service.ts
 ```
 
-### 6. Symbol History & Co-Change Mining
-Inspect historical Git commit churn and symbol evolution:
+### Evolution and Symbol History
+
+Inspect Git churn and symbol evolution:
 
 ```bash
 sentrix history --symbol AuthService /path/to/repository
 sentrix evolution /path/to/repository
 ```
 
-### 7. Software Bill of Materials (SBOM) Export
-Generate SPDX / CycloneDX SBOM JSON:
+### Software Bill of Materials (SBOM)
+
+Generate CycloneDX or SPDX SBOM JSON:
 
 ```bash
 sentrix sbom /path/to/repository > sbom.json
 ```
 
-### 8. Web GUI Dashboard
-Launch the interactive local web dashboard:
+### Web GUI Dashboard
+
+Start local web server and launch dashboard:
 
 ```bash
 sentrix serve --port 7070
 ```
 
-Access the dashboard at `http://127.0.0.1:7070`.
+Access the interface at `http://127.0.0.1:7070`.
 
 ---
 
-## REST API Reference
+## CLI Command Summary and Exit Codes
 
-The Axum REST server binds to `127.0.0.1:7070` by default.
+| Command | Description |
+|---|---|
+| `sentrix analyze [path]` | Scan repository code, dependencies, and security findings |
+| `sentrix config validate [path]` | Validate sentrix.toml configuration file bounds |
+| `sentrix health [path]` | Show repository health scorecard across 6 categories |
+| `sentrix risk [path]` | Show engineering risk hotspots and complexity |
+| `sentrix drift [path]` | Detect architecture rule violations and drift |
+| `sentrix dependency [path]` | Detect circular dependencies and cycles |
+| `sentrix impact [target]` | Calculate change impact radius and recommend tests |
+| `sentrix history [symbol]` | Query historical symbol evolution from Git log |
+| `sentrix evolution [path]` | Mine repository historical change patterns and co-changes |
+| `sentrix predict [target]` | Estimate feature-weighted predictive change risk |
+| `sentrix ownership [target]` | Show contribution concentration metrics |
+| `sentrix sbom [path]` | Export SPDX and CycloneDX SBOM JSON |
+| `sentrix serve [path]` | Launch local web GUI server |
 
-- `GET /api/status`: Analysis status and health scorecard metrics.
-- `GET /api/graph`: Software Knowledge Graph nodes and edges.
-- `GET /api/architecture`: System architecture pattern classification and confidence.
-- `GET /api/hotspots`: Risk hotspots and complexity breakdown.
-- `GET /api/findings`: Secret findings and data-flow taint analysis findings.
-- `POST /api/impact`: Compute change blast radius for a target component.
-- `POST /api/evolution/predict`: Feature-weighted predictive change risk evaluation.
-- `POST /api/evolution/recommend-tests`: Call-graph backed test recommendation engine.
-- `POST /api/evolution/ownership`: Contributor concentration and bus-factor indicators.
+### Exit Code Contract
+- `0`: Successful execution.
+- `1`: Finding, policy violation, or drift alert condition.
+- `2`: Command usage or configuration validation error.
+- `3`: Runtime or infrastructure failure.
 
 ---
 
-## Configuration Reference (`sentrix.toml`)
+## Configuration (`sentrix.toml`)
 
 ```toml
 [project]
@@ -222,11 +263,27 @@ port = 7070
 
 ---
 
-## Local Storage & Cache Semantics
+## REST API Reference
 
-SENTRIX maintains state in `.sentrix/cache.db` relative to the target repository root directory.
-- **Cache Invalidation**: On schema version changes or parser updates, incompatible file cache rows are safely invalidated.
-- **Git History Requirements**: Evolution commands rely on Git commit logs. Repositories with fewer than 2 commits return `"Insufficient historical evidence"`.
+The REST API server binds to `127.0.0.1:7070` by default.
+
+- `GET /api/status`: Analysis status and health metrics.
+- `GET /api/graph`: Software Knowledge Graph nodes and edges.
+- `GET /api/architecture`: System architecture pattern classification.
+- `GET /api/hotspots`: Risk hotspots and complexity breakdown.
+- `GET /api/findings`: Security findings and data-flow taint results.
+- `POST /api/impact`: Compute change blast radius for a target component.
+- `POST /api/evolution/predict`: Compute predictive change risk.
+- `POST /api/evolution/recommend-tests`: Call-graph backed test recommendations.
+- `POST /api/evolution/ownership`: Contributor concentration indicators.
+
+---
+
+## Local Storage and Cache Semantics
+
+SENTRIX stores state in `.sentrix/cache.db` relative to the repository root directory.
+- Cache Invalidation: Schema version updates or parser changes trigger automatic cache row invalidation.
+- Git History Requirements: Evolution analysis requires Git commit logs. Repositories with fewer than 2 commits return an insufficient historical evidence message.
 
 ---
 
@@ -234,38 +291,40 @@ SENTRIX maintains state in `.sentrix/cache.db` relative to the target repository
 
 | Target Platform | Support Status | Notes |
 |---|---|---|
-| **Linux x86_64** | **VERIFIED** | Tested on Ubuntu 22.04 / Linux 6.x x86_64 |
-| **Linux ARM64** | **BUILD NOT VERIFIED** | Configured in GitHub release workflow |
-| **macOS ARM64** | **BUILD NOT VERIFIED** | Configured in GitHub release workflow |
-| **macOS x86_64** | **BUILD NOT VERIFIED** | Configured in GitHub release workflow |
-| **Windows x86_64** | **BUILD NOT VERIFIED** | Configured in GitHub release workflow |
+| Linux x86_64 | VERIFIED | Tested on Ubuntu 22.04 / Linux 6.x x86_64 |
+| Linux ARM64 | BUILD NOT VERIFIED | Configured in GitHub release workflow |
+| macOS ARM64 | BUILD NOT VERIFIED | Configured in GitHub release workflow |
+| macOS x86_64 | BUILD NOT VERIFIED | Configured in GitHub release workflow |
+| Windows x86_64 | BUILD NOT VERIFIED | Configured in GitHub release workflow |
 
 ---
 
-## Benchmark Metrics
+## Reference Benchmark
 
 Recorded baseline measurement on real target repository `pingsaketchoudhary.github.io` (Release profile on Linux x86_64):
 
-- **Files Analyzed**: 105
-- **Lines of Code**: 15,673
-- **Functions Extracted**: 23
-- **Knowledge Graph**: 302 nodes, 477 edges
-- **Initial Analysis Duration**: 199 ms
-- **Incremental Re-analysis Duration**: 1 ms
-- **Cache Hit Duration**: 0 ms
-- **Architecture Pattern**: `StaticSite`
-- **Security Findings**: 0
-- **Risk Hotspots**: 3
+- Files Analyzed: 105
+- Lines of Code: 15,673
+- Functions Extracted: 23
+- Knowledge Graph: 302 nodes, 477 edges
+- Initial Analysis Duration: 199 ms
+- Incremental Re-analysis Duration: 1 ms
+- Cache Hit Duration: 0 ms
+- Architecture Pattern: StaticSite
+- Security Findings: 0
+- Risk Hotspots: 3
 
-*Note: This is a recorded baseline benchmark for reference and does not constitute a universal performance guarantee.*
+This recorded benchmark serves as a single target reference measurement and is not a universal performance guarantee.
 
 ---
 
-## Release Verification & Integrity
+## Release Verification and Checksums
 
-- **Release Version**: `1.0.0`
-- **Linux x86_64 Release Binary SHA-256**: `f79aac3b2670718d76d8e80716898e3ca2a79e866603d86d51a85d3a9d84913c`
-- **Checksum Verification**: `sha256sum -c SHA256SUMS`
+- Release Version: 1.0.0
+- GitHub Release: https://github.com/pingsaketchoudhary/sentrix/releases/tag/v1.0.0
+- Release Archive: `sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz`
+- Archive SHA-256 Checksum: `ffd797de677ac624c278470cd44676714c642da804f243d571b725930a8a6b37`
+- Binary SHA-256 Checksum: `f79aac3b2670718d76d8e80716898e3ca2a79e866603d86d51a85d3a9d84913c`
 
 ---
 
@@ -273,49 +332,49 @@ Recorded baseline measurement on real target repository `pingsaketchoudhary.gith
 
 ```
 .
-├── .github/workflows/   # CI quality & release workflows
-├── crates/              # 14 modular Rust workspace crates
-│   ├── sentrix-analysis # Architecture, health, hotspots & drift engines
-│   ├── sentrix-api      # Axum REST API server
-│   ├── sentrix-cli      # Single binary CLI entrypoint
-│   ├── sentrix-core     # Errors, telemetry & config validation
-│   ├── sentrix-evolution# Git churn, symbol history & predictive risk
-│   ├── sentrix-git      # Git log parser
-│   ├── sentrix-graph    # Petgraph Knowledge Graph & Tarjan engine
-│   ├── sentrix-impact   # Change blast radius & ripple analysis
-│   ├── sentrix-ir       # Software Intermediate Representation
-│   ├── sentrix-parser   # Tree-sitter multi-language parser engine
-│   ├── sentrix-search   # Grounded search & query intent engine
-│   ├── sentrix-security # Secret scanner, SBOM & prompt injection defense
-│   └── sentrix-storage  # Local SQLite database persistence
-├── frontend/            # React + TypeScript + Vite GUI dashboard
-├── docs/                # Architecture, security & API documentation
-├── reports/             # Benchmark validation reports & certification JSON
-├── tests/               # Fixtures & end-to-end acceptance tests
-├── Cargo.toml           # Workspace manifest
-└── LICENSE              # MIT License
+|-- .github/workflows/   # CI and release workflow definitions
+|-- crates/              # 14 modular Rust workspace crates
+|   |-- sentrix-analysis # Architecture, health, hotspots, and drift engines
+|   |-- sentrix-api      # Axum REST API server
+|   |-- sentrix-cli      # Single binary CLI entrypoint
+|   |-- sentrix-core     # Error definitions, telemetry, and config validation
+|   |-- sentrix-evolution# Git churn, symbol history, and predictive risk
+|   |-- sentrix-git      # Git log parser
+|   |-- sentrix-graph    # Petgraph Knowledge Graph and Tarjan engine
+|   |-- sentrix-impact   # Change blast radius and ripple analysis
+|   |-- sentrix-ir       # Software Intermediate Representation
+|   |-- sentrix-parser   # Tree-sitter multi-language parser engine
+|   |-- sentrix-search   # Grounded search and query intent engine
+|   |-- sentrix-security # Secret scanner, SBOM, and prompt injection defense
+|   `-- sentrix-storage  # Local SQLite database persistence
+|-- frontend/            # React, TypeScript, and Vite GUI dashboard
+|-- docs/                # Architecture, security, and API documentation
+|-- reports/             # Benchmark reports and release certification JSON
+|-- tests/               # Fixtures and end-to-end acceptance tests
+|-- Cargo.toml           # Workspace manifest
+`-- LICENSE              # MIT License
 ```
 
 ---
 
-## Development & Testing
+## Development and Testing
 
-Run quality gates locally:
+Run local quality checks:
 
 ```bash
-# Check code formatting
+# Code formatting check
 cargo fmt --all -- --check
 
-# Check workspace compilation
+# Compilation check
 cargo check --workspace
 
-# Run full workspace unit & integration test suite
+# Workspace unit and integration tests
 cargo test --workspace
 
-# Run Clippy lints
+# Clippy lints audit
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 
-# Build frontend production bundle
+# Frontend production build
 cd frontend && npm run build
 ```
 
@@ -323,13 +382,13 @@ cd frontend && npm run build
 
 ## Contributing
 
-Contributions are welcome. Please ensure all pull requests pass formatting (`cargo fmt`), clippy (`cargo clippy`), unit tests (`cargo test`), and frontend production builds prior to submission.
+Contributions are welcome. Please ensure pull requests pass formatting (`cargo fmt`), clippy (`cargo clippy`), unit tests (`cargo test`), and frontend production builds (`npm run build`) prior to submission.
 
 ---
 
 ## Security Reporting
 
-If you discover a security vulnerability, please report it via GitHub security advisories or open a private disclosure issue. Target repositories are treated as untrusted data; please include test fixtures reproducing the vulnerability safely.
+To report a potential security vulnerability, please submit a report via GitHub security advisories or open a private issue. Target repositories are treated as untrusted data inputs.
 
 ---
 

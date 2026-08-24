@@ -1,6 +1,6 @@
-# SENTRIX Phase 4 — Final Release & Evolution Intelligence Report
+# SENTRIX Phase 4 - Final Release & Evolution Intelligence Report
 
-Executive Final Release Report for **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Executive Final Release Report for **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

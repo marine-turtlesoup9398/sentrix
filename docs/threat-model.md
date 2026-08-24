@@ -1,6 +1,6 @@
 # SENTRIX Threat Model
 
-Threat model analysis using STRIDE methodology for **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Threat model analysis using STRIDE methodology for **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

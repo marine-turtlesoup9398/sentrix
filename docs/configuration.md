@@ -1,6 +1,6 @@
 # SENTRIX Configuration Guide
 
-Complete configuration reference for **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Complete configuration reference for **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

@@ -1,6 +1,6 @@
-# SENTRIX Phase 5 — Final Launch Audit & Verification Scorecard
+# SENTRIX Phase 5 - Final Launch Audit & Verification Scorecard
 
-Executive Launch Audit Scorecard for **SENTRIX — Software Intelligence & Engineering Risk Explorer v1.0.0**.
+Executive Launch Audit Scorecard for **SENTRIX - Software Intelligence & Engineering Risk Explorer v1.0.0**.
 
 ---
 

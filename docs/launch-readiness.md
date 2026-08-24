@@ -1,6 +1,6 @@
 # SENTRIX Launch Readiness Scorecard
 
-Final Production Readiness Audit for **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Final Production Readiness Audit for **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

@@ -1,6 +1,6 @@
 # SENTRIX Product Claims & Evidence Matrix
 
-Technical verification status for public capabilities of **SENTRIX — Software Intelligence & Engineering Risk Explorer v1.0.0**.
+Technical verification status for public capabilities of **SENTRIX - Software Intelligence & Engineering Risk Explorer v1.0.0**.
 
 ---
 

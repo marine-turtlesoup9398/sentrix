@@ -1,6 +1,6 @@
 # SENTRIX Release Engineering Checklist
 
-24-point verification checklist for production releases of **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+24-point verification checklist for production releases of **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

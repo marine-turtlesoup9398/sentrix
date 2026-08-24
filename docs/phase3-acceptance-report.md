@@ -1,6 +1,6 @@
-# SENTRIX Phase 3 — Final End-to-End Intelligence Acceptance Report
+# SENTRIX Phase 3 - Final End-to-End Intelligence Acceptance Report
 
-Executive Report & System Quality Scorecard for **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Executive Report & System Quality Scorecard for **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

@@ -1,12 +1,12 @@
-# SENTRIX v1.0.0 — Final Launch Certification Report
+# SENTRIX v1.0.0 - Final Launch Certification Report
 
-Final Production Release Certification & Validation Scorecard for **SENTRIX — Software Intelligence & Engineering Risk Explorer v1.0.0**.
+Final Production Release Certification & Validation Scorecard for **SENTRIX - Software Intelligence & Engineering Risk Explorer v1.0.0**.
 
 ---
 
 ## 1. Release Identification & Build Metadata
 
-- **Product Name**: SENTRIX — Software Intelligence & Engineering Risk Explorer
+- **Product Name**: SENTRIX - Software Intelligence & Engineering Risk Explorer
 - **Release Version**: `1.0.0`
 - **Commit Reference**: `LOCAL_WORKSPACE_BUILD`
 - **Rust Toolchain**: `rustc 1.85+ (stable x86_64-unknown-linux-gnu)`
@@ -55,7 +55,7 @@ Final Production Release Certification & Validation Scorecard for **SENTRIX — 
 
 | Target Platform | Status | Verification Environment & Notes |
 |---|---|---|
-| **Linux x86_64** | **VERIFIED** | Ubuntu 22.04 / Linux 6.x x86_64 — All quality gates PASS |
+| **Linux x86_64** | **VERIFIED** | Ubuntu 22.04 / Linux 6.x x86_64 - All quality gates PASS |
 | **Linux ARM64** | **BUILD NOT VERIFIED** | Environment unavailable in current build environment |
 | **macOS ARM64** | **BUILD NOT VERIFIED** | Environment unavailable in current build environment |
 | **macOS x86_64** | **BUILD NOT VERIFIED** | Environment unavailable in current build environment |

@@ -1,6 +1,6 @@
 # SENTRIX Security Model
 
-Comprehensive security model specification for **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Comprehensive security model specification for **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 

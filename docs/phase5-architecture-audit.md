@@ -1,6 +1,6 @@
-# SENTRIX Phase 5 — Production Architecture Audit
+# SENTRIX Phase 5 - Production Architecture Audit
 
-Systematic architectural audit of **SENTRIX — Software Intelligence & Engineering Risk Explorer**.
+Systematic architectural audit of **SENTRIX - Software Intelligence & Engineering Risk Explorer**.
 
 ---
 
