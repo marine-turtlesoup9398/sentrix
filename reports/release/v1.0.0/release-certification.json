@@ -1,9 +1,9 @@
 {
   "product": "SENTRIX — Software Intelligence & Engineering Risk Explorer",
   "version": "1.0.0",
-  "commit_sha": "LOCAL_WORKSPACE_BUILD",
+  "commit_sha": "50d6981a3d83713f52a2065ef69c73bbc9ce4141",
   "release_status": "APPROVED FOR RELEASE WITH DOCUMENTED LIMITATIONS",
-  "certification_timestamp": "2026-08-24T12:56:00Z",
+  "certification_timestamp": "2026-08-24T13:07:40Z",
   "quality_gates": {
     "cargo_fmt": "PASS",
     "cargo_check": "PASS",
