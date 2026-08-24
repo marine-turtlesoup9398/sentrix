@@ -1,7 +1,9 @@
 use clap::{Parser, Subcommand};
 use colored::*;
+use std::io::IsTerminal;
 use std::path::{Path, PathBuf};
 use std::time::Instant;
+use tempfile::TempDir;
 
 use sentrix_ai::AiProvider;
 use sentrix_analysis::{
@@ -22,30 +24,40 @@ use sentrix_parser::CodeExtractor;
 use sentrix_search::{QueryIntentEngine, SearchEngine};
 use sentrix_security::{DataFlowEngine, SbomComponent, SbomGenerator, SecretScanner};
 
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+const AUTHOR: &str = "Saket Choudhary";
+const REPO_URL: &str = "github.com/pingsaketchoudhary/sentrix";
+
 #[derive(Parser)]
 #[command(name = "sentrix")]
-#[command(about = "SENTRIX — Software Intelligence & Engineering Risk Explorer", long_about = None)]
+#[command(version = VERSION)]
+#[command(about = "SENTRIX - Software Intelligence & Engineering Risk Explorer", long_about = None)]
 struct Cli {
-    #[arg(short, long, global = true)]
+    #[arg(short, long, global = true, help = "Output machine-readable JSON format")]
     json: bool,
 
-    #[arg(short, long, global = true)]
+    #[arg(short, long, global = true, help = "Enable verbose diagnostic logging")]
     verbose: bool,
 
-    #[arg(long, global = true)]
+    #[arg(long, global = true, help = "Disable ANSI color output")]
+    no_color: bool,
+
+    #[arg(long, global = true, help = "Disable AI explanation layer")]
     no_ai: bool,
 
     #[command(subcommand)]
-    command: Commands,
+    command: Option<Commands>,
 }
 
 #[derive(Subcommand)]
 enum Commands {
     /// Analyze repository code, dependencies, history & security
     Analyze {
-        #[arg(default_value = ".")]
-        path: PathBuf,
+        #[arg(default_value = ".", help = "Local directory path or remote Git URL")]
+        target: String,
     },
+    /// Show product version and environment information
+    Version,
     /// Run coverage diagnostics breakdown on graph entities and languages
     Diagnostics {
         #[command(subcommand)]
@@ -53,91 +65,91 @@ enum Commands {
     },
     /// Run automated performance & accuracy benchmark on local path or git URL
     Benchmark {
-        #[arg(default_value = ".")]
+        #[arg(default_value = ".", help = "Local directory path or remote Git URL")]
         target: String,
     },
     /// Show repository health scores across 6 categories
     Health {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Show engineering risk hotspots & risk breakdown
     Risk {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Detect architecture layer rule violations & drift
     Drift {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Run dependency intelligence & circular dependency detection
     Dependency {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Calculate blast radius for specific package or component
     DependencyImpact {
-        target: String,
+        target_component: String,
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
-    /// Show analysis status & repository health metrics
+    /// Show analysis status & repository summary
     Status {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Export or inspect Software Knowledge Graph
     Graph {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Perform fast symbol and entity search across repository
     Search {
         query: String,
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Execute intent-driven grounded graph query
     Query {
         query: String,
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Calculate change impact radius for working tree, commit range, or file
     Impact {
         #[arg(default_value = "HEAD~1..HEAD")]
         revision_or_file: String,
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// List engineering hotspots & high-risk components
     Hotspots {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Inspect security surface, secrets & data flows
     Security {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
         #[arg(short, long, default_value = "table")]
-        format: String, // table, json, sarif
+        format: String,
     },
     /// Discover system architecture & component boundaries
     Architecture {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Query repository using evidence-backed AI explanation
     Ask {
         question: String,
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Launch local web GUI server
     Serve {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
         #[arg(short, long, default_value = "7070")]
         port: u16,
     },
@@ -146,29 +158,29 @@ enum Commands {
         #[arg(short, long)]
         symbol: Option<String>,
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Show repository historical change patterns and co-changes
     Evolution {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Estimate predictive change risk for component or diff
     Predict {
-        target: String,
+        target_component: String,
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Show contribution concentration & bus factor for component
     Ownership {
-        target: String,
+        target_component: String,
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Export CycloneDX / SPDX Software Bill of Materials (SBOM) JSON
     Sbom {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
     /// Configuration management and validation
     Config {
@@ -182,7 +194,7 @@ enum DiagnosticsSubcommand {
     /// Detailed entity, relationship, and parser coverage audit
     Coverage {
         #[arg(default_value = ".")]
-        path: PathBuf,
+        target: String,
     },
 }
 
@@ -195,18 +207,127 @@ enum ConfigSubcommand {
     },
 }
 
+pub struct ResolvedRepository {
+    pub path: PathBuf,
+    _temp_dir: Option<TempDir>,
+}
+
+fn print_banner() {
+    println!(
+        "{}",
+        r#"
+  ____  _____ _   _ _____ ____  ______  
+ / ___|| ____| \ | |_   _|  _ \|_ _\ \/ /
+ \___ \|  _| |  \| | | | | |_) || | \  / 
+  ___) | |___| |\  | | | |  _ < | | /  \ 
+ |____/|_____|_| \_| |_| |_| \_\___/_/\_\
+"#
+        .cyan()
+        .bold()
+    );
+    println!(
+        "{}",
+        "SENTRIX - Software Intelligence & Engineering Risk Explorer"
+            .bold()
+            .white()
+    );
+    println!(
+        "{}",
+        format!("Maintained by {} | {}", AUTHOR, REPO_URL).dimmed()
+    );
+    println!();
+}
+
+fn print_version() {
+    println!("SENTRIX {}", VERSION);
+    println!("Software Intelligence & Engineering Risk Explorer");
+    println!("Build: release");
+    println!(
+        "Platform: {}-{}",
+        std::env::consts::OS,
+        std::env::consts::ARCH
+    );
+    println!("Maintained by {}", AUTHOR);
+    println!("GitHub: {}", REPO_URL);
+}
+
+fn resolve_repository(target: &str) -> anyhow::Result<ResolvedRepository> {
+    if target.starts_with("http://")
+        || target.starts_with("https://")
+        || target.starts_with("git@")
+    {
+        println!("Cloning remote Git repository: {} ...", target);
+        let temp_dir = TempDir::new()?;
+        let temp_path = temp_dir.path().to_path_buf();
+
+        let status = std::process::Command::new("git")
+            .args(["clone", "--depth", "1", target, temp_path.to_str().unwrap()])
+            .status()?;
+
+        if !status.success() {
+            eprintln!("Error: Failed to clone remote Git repository at '{}'", target);
+            std::process::exit(2);
+        }
+
+        Ok(ResolvedRepository {
+            path: temp_path,
+            _temp_dir: Some(temp_dir),
+        })
+    } else {
+        let path = PathBuf::from(target);
+        if !path.exists() {
+            eprintln!("Error: Specified repository path '{}' does not exist.", target);
+            eprintln!("Usage: sentrix analyze <PATH|URL>");
+            std::process::exit(2);
+        }
+        if !path.is_dir() {
+            eprintln!("Error: Specified path '{}' is a file, not a directory.", target);
+            std::process::exit(2);
+        }
+        Ok(ResolvedRepository {
+            path,
+            _temp_dir: None,
+        })
+    }
+}
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
+
+    if cli.no_color || std::env::var_os("NO_COLOR").is_some() || !std::io::stdout().is_terminal() {
+        colored::control::set_override(false);
+    }
+
     init_telemetry(cli.verbose);
 
-    match cli.command {
-        Commands::Analyze { path } => {
-            run_analysis(&path, cli.json).await?;
+    let command = match cli.command {
+        Some(cmd) => cmd,
+        None => {
+            if !cli.json && colored::control::SHOULD_COLORIZE.should_colorize() {
+                print_banner();
+            }
+            println!("Usage: sentrix <COMMAND> [OPTIONS]\n");
+            println!("Run `sentrix --help` for available commands.");
+            return Ok(());
+        }
+    };
+
+    match command {
+        Commands::Version => {
+            print_version();
+        }
+        Commands::Analyze { target } => {
+            if !cli.json && colored::control::SHOULD_COLORIZE.should_colorize() {
+                print_banner();
+            }
+            let repo = resolve_repository(&target)?;
+            run_analysis(&repo.path, cli.json).await?;
         }
         Commands::Diagnostics { subcommand } => match subcommand {
-            DiagnosticsSubcommand::Coverage { path } => {
-                let (files, graph, _, _, comp) = scan_repository(&path)?;
+            DiagnosticsSubcommand::Coverage { target } => {
+                let repo = resolve_repository(&target)?;
+                let (files, graph, _, _, comp) = scan_repository(&repo.path)?;
                 if cli.json {
                     println!(
                         "{}",
@@ -233,6 +354,10 @@ async fn main() -> anyhow::Result<()> {
         },
         Commands::Config { subcommand } => match subcommand {
             ConfigSubcommand::Validate { path } => {
+                if !path.exists() {
+                    eprintln!("Error: Configuration file '{}' does not exist.", path.display());
+                    std::process::exit(2);
+                }
                 let config = SentrixConfig::load_from_file(&path).unwrap_or_default();
                 let errors = config.validate();
 
@@ -242,7 +367,7 @@ async fn main() -> anyhow::Result<()> {
                     } else {
                         println!(
                             "{}",
-                            format!("✓ Configuration file '{}' is valid.", path.display())
+                            format!("Configuration file '{}' is valid.", path.display())
                                 .green()
                                 .bold()
                         );
@@ -257,14 +382,14 @@ async fn main() -> anyhow::Result<()> {
                         println!(
                             "{}",
                             format!(
-                                "✗ Configuration validation failed for '{}':",
+                                "Configuration validation failed for '{}':",
                                 path.display()
                             )
                             .red()
                             .bold()
                         );
                         for err in &errors {
-                            println!("  • Error: {}", err);
+                            println!("  * Error: {}", err);
                         }
                     }
                     std::process::exit(2);
@@ -272,7 +397,8 @@ async fn main() -> anyhow::Result<()> {
             }
         },
         Commands::Benchmark { target } => {
-            let report = BenchmarkEngine::run_benchmark(&target)?;
+            let repo = resolve_repository(&target)?;
+            let report = BenchmarkEngine::run_benchmark(&repo.path)?;
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&report)?);
             } else {
@@ -287,8 +413,9 @@ async fn main() -> anyhow::Result<()> {
                 println!("Architecture Pattern:    {:?}", report.architecture_pattern);
             }
         }
-        Commands::Health { path } => {
-            let (files, _, findings, hotspots, _) = scan_repository(&path)?;
+        Commands::Health { target } => {
+            let repo = resolve_repository(&target)?;
+            let (files, _, findings, hotspots, _) = scan_repository(&repo.path)?;
             let arch = ArchitectureEngine::discover(&files);
             let health =
                 RepositoryHealthEngine::compute_health(&files, &findings, &hotspots, &arch);
@@ -300,33 +427,35 @@ async fn main() -> anyhow::Result<()> {
                     health.overall_score
                 );
                 println!(
-                    "• Architecture Score:  {}/100",
+                    "* Architecture Score:  {}/100",
                     health.architecture_score.score
                 );
-                println!("• Security Score:      {}/100", health.security_score.score);
+                println!("* Security Score:      {}/100", health.security_score.score);
                 println!(
-                    "• Maintainability:     {}/100",
+                    "* Maintainability:     {}/100",
                     health.maintainability_score.score
                 );
             }
         }
-        Commands::Risk { path } => {
-            let (_files, _, _, hotspots, _) = scan_repository(&path)?;
+        Commands::Risk { target } => {
+            let repo = resolve_repository(&target)?;
+            let (_files, _, _, hotspots, _) = scan_repository(&repo.path)?;
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&hotspots)?);
             } else {
                 println!("\n--- RISK HOTSPOTS & ENGINEERING RISK ---");
                 for h in hotspots.iter().take(5) {
                     println!(
-                        "• {} - Risk Score: {:.1} [{:?}]",
+                        "* {} - Risk Score: {:.1} [{:?}]",
                         h.relative_path, h.hotspot_score, h.risk_level
                     );
                 }
             }
         }
-        Commands::Drift { path } => {
-            let (files, graph, _, _, _) = scan_repository(&path)?;
-            let config = SentrixConfig::load_from_file(&path).unwrap_or_default();
+        Commands::Drift { target } => {
+            let repo = resolve_repository(&target)?;
+            let (files, graph, _, _, _) = scan_repository(&repo.path)?;
+            let config = SentrixConfig::load_from_file(&repo.path).unwrap_or_default();
             let drift =
                 ArchitectureDriftEngine::analyze_drift(&graph, &files, &config.architecture.rules);
             if cli.json {
@@ -339,8 +468,9 @@ async fn main() -> anyhow::Result<()> {
                 std::process::exit(1);
             }
         }
-        Commands::Dependency { path } => {
-            let (_, graph, _, _, _) = scan_repository(&path)?;
+        Commands::Dependency { target } => {
+            let repo = resolve_repository(&target)?;
+            let (_, graph, _, _, _) = scan_repository(&repo.path)?;
             let report = DependencyIntelligenceEngine::detect_circular_dependencies(&graph);
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&report)?);
@@ -349,22 +479,32 @@ async fn main() -> anyhow::Result<()> {
                 println!("Circular Dependency Cycles: {}", report.total_cycles_found);
             }
         }
-        Commands::DependencyImpact { target, path } => {
-            let (files, graph, _, _, _) = scan_repository(&path)?;
-            let report =
-                DependencyIntelligenceEngine::calculate_blast_radius(&graph, &files, &[], &target);
+        Commands::DependencyImpact {
+            target_component,
+            target,
+        } => {
+            let repo = resolve_repository(&target)?;
+            let (files, graph, _, _, _) = scan_repository(&repo.path)?;
+            let report = DependencyIntelligenceEngine::calculate_blast_radius(
+                &graph,
+                &files,
+                &[],
+                &target_component,
+            );
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&report)?);
             } else {
-                println!("\n--- DEPENDENCY BLAST RADIUS FOR '{}' ---", target);
+                println!("\n--- DEPENDENCY BLAST RADIUS FOR '{}' ---", target_component);
                 println!("Blast Radius Level: {:?}", report.blast_radius_level);
             }
         }
-        Commands::Status { path } => {
-            run_analysis(&path, cli.json).await?;
+        Commands::Status { target } => {
+            let repo = resolve_repository(&target)?;
+            run_analysis(&repo.path, cli.json).await?;
         }
-        Commands::Graph { path } => {
-            let (_, graph, _, _, _) = scan_repository(&path)?;
+        Commands::Graph { target } => {
+            let repo = resolve_repository(&target)?;
+            let (_, graph, _, _, _) = scan_repository(&repo.path)?;
             if cli.json {
                 println!(
                     "{}",
@@ -381,8 +521,9 @@ async fn main() -> anyhow::Result<()> {
                 );
             }
         }
-        Commands::Search { query, path } => {
-            let (files, graph, _, _, _) = scan_repository(&path)?;
+        Commands::Search { query, target } => {
+            let repo = resolve_repository(&target)?;
+            let (files, graph, _, _, _) = scan_repository(&repo.path)?;
             let results = SearchEngine::search(&query, &files, &graph);
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&results)?);
@@ -393,8 +534,9 @@ async fn main() -> anyhow::Result<()> {
                 }
             }
         }
-        Commands::Query { query, path } => {
-            let (files, graph, _, _, _) = scan_repository(&path)?;
+        Commands::Query { query, target } => {
+            let repo = resolve_repository(&target)?;
+            let (files, graph, _, _, _) = scan_repository(&repo.path)?;
             let res = QueryIntentEngine::execute_grounded_query(&query, &files, &graph);
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&res)?);
@@ -406,9 +548,10 @@ async fn main() -> anyhow::Result<()> {
         }
         Commands::Impact {
             revision_or_file,
-            path,
+            target,
         } => {
-            let (files, graph, _, _, _) = scan_repository(&path)?;
+            let repo = resolve_repository(&target)?;
+            let (files, graph, _, _, _) = scan_repository(&repo.path)?;
             let report = ImpactEngine::analyze_impact(
                 &graph,
                 &files,
@@ -438,28 +581,31 @@ async fn main() -> anyhow::Result<()> {
                 );
                 println!("Recommended Tests to Re-run:    {}", recs.len());
                 for r in recs {
-                    println!("  • {} [{:?}]", r.test_file, r.priority);
+                    println!("  * {} [{:?}]", r.test_file, r.priority);
                 }
             }
         }
-        Commands::Hotspots { path } => {
-            let (_files, _, _, hotspots, _) = scan_repository(&path)?;
+        Commands::Hotspots { target } => {
+            let repo = resolve_repository(&target)?;
+            let (_files, _, _, hotspots, _) = scan_repository(&repo.path)?;
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&hotspots)?);
             } else {
                 println!("Hotspots Count: {}", hotspots.len());
             }
         }
-        Commands::Security { path, format: _ } => {
-            let (_files, _, findings, _, _) = scan_repository(&path)?;
+        Commands::Security { target, format: _ } => {
+            let repo = resolve_repository(&target)?;
+            let (_files, _, findings, _, _) = scan_repository(&repo.path)?;
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&findings)?);
             } else {
                 println!("Security Findings: {}", findings.len());
             }
         }
-        Commands::Architecture { path } => {
-            let (files, _, _, _, _) = scan_repository(&path)?;
+        Commands::Architecture { target } => {
+            let repo = resolve_repository(&target)?;
+            let (files, _, _, _, _) = scan_repository(&repo.path)?;
             let arch = ArchitectureEngine::discover(&files);
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&arch)?);
@@ -469,9 +615,10 @@ async fn main() -> anyhow::Result<()> {
                 println!("Confidence:         {:.0}%", arch.confidence * 100.0);
             }
         }
-        Commands::Ask { question, path } => {
-            let (files, graph, _, _, _) = scan_repository(&path)?;
-            let config = SentrixConfig::load_from_file(&path).unwrap_or_default();
+        Commands::Ask { question, target } => {
+            let repo = resolve_repository(&target)?;
+            let (files, graph, _, _, _) = scan_repository(&repo.path)?;
+            let config = SentrixConfig::load_from_file(&repo.path).unwrap_or_default();
             let grounded = QueryIntentEngine::execute_grounded_query(&question, &files, &graph);
             let provider = AiProvider::new(&config.ai.provider, config.ai.api_key.clone());
             let ans = provider.ask_grounded(&question, &grounded.evidence).await?;
@@ -483,10 +630,14 @@ async fn main() -> anyhow::Result<()> {
                 println!("Confidence: {:?}", ans.confidence);
             }
         }
-        Commands::Serve { path, port } => {
-            let (files, graph, findings, hotspots, comp) = scan_repository(&path)?;
+        Commands::Serve { target, port } => {
+            if !cli.json && colored::control::SHOULD_COLORIZE.should_colorize() {
+                print_banner();
+            }
+            let repo = resolve_repository(&target)?;
+            let (files, graph, findings, hotspots, comp) = scan_repository(&repo.path)?;
             let arch = ArchitectureEngine::discover(&files);
-            let config = SentrixConfig::load_from_file(&path).unwrap_or_default();
+            let config = SentrixConfig::load_from_file(&repo.path).unwrap_or_default();
 
             let state = AppState {
                 files,
@@ -506,9 +657,10 @@ async fn main() -> anyhow::Result<()> {
             );
             server.run().await?;
         }
-        Commands::History { symbol, path } => {
+        Commands::History { symbol, target } => {
+            let repo = resolve_repository(&target)?;
             let records =
-                EvolutionGitExtractor::extract_commit_records(&path.to_string_lossy(), 100);
+                EvolutionGitExtractor::extract_commit_records(&repo.path.to_string_lossy(), 100);
             if let Some(sym) = symbol {
                 let report = SymbolHistoryEngine::query_symbol_history(&sym, None, &records);
                 if cli.json {
@@ -527,9 +679,10 @@ async fn main() -> anyhow::Result<()> {
                 println!("Extracted {} historical commit records.", records.len());
             }
         }
-        Commands::Evolution { path } => {
+        Commands::Evolution { target } => {
+            let repo = resolve_repository(&target)?;
             let records =
-                EvolutionGitExtractor::extract_commit_records(&path.to_string_lossy(), 100);
+                EvolutionGitExtractor::extract_commit_records(&repo.path.to_string_lossy(), 100);
             let summary = EvolutionGitExtractor::summarize(&records);
             let co_changes = CoChangeEngine::mine_co_changes(&records, 2);
             let patterns = PatternMiningEngine::mine_patterns(&records, 3);
@@ -551,28 +704,42 @@ async fn main() -> anyhow::Result<()> {
                 println!("Mined Change Patterns:   {}", patterns.len());
             }
         }
-        Commands::Predict { target, path } => {
-            let (files, graph, _, _, _) = scan_repository(&path)?;
-            let report = PredictiveRiskEngine::predict_change_risk(&target, &files, &graph, 0, 0);
+        Commands::Predict {
+            target_component,
+            target,
+        } => {
+            let repo = resolve_repository(&target)?;
+            let (files, graph, _, _, _) = scan_repository(&repo.path)?;
+            let report = PredictiveRiskEngine::predict_change_risk(
+                &target_component,
+                &files,
+                &graph,
+                0,
+                0,
+            );
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&report)?);
             } else {
-                println!("\n--- PREDICTIVE CHANGE RISK FOR '{}' ---", target);
+                println!("\n--- PREDICTIVE CHANGE RISK FOR '{}' ---", target_component);
                 println!("Predicted Risk:  {:?}", report.predicted_risk);
                 println!("Confidence:      {:?}", report.confidence);
                 println!("Limitations:     {}", report.limitations);
             }
         }
-        Commands::Ownership { target, path } => {
+        Commands::Ownership {
+            target_component,
+            target,
+        } => {
+            let repo = resolve_repository(&target)?;
             let records =
-                EvolutionGitExtractor::extract_commit_records(&path.to_string_lossy(), 100);
-            let ownership = OwnershipEngine::analyze_ownership(&target, &records);
+                EvolutionGitExtractor::extract_commit_records(&repo.path.to_string_lossy(), 100);
+            let ownership = OwnershipEngine::analyze_ownership(&target_component, &records);
             if cli.json {
                 println!("{}", serde_json::to_string_pretty(&ownership)?);
             } else {
                 println!(
                     "\n--- HISTORICAL CONTRIBUTION CONCENTRATION FOR '{}' ---",
-                    target
+                    target_component
                 );
                 println!("Total Commits:                {}", ownership.total_commits);
                 println!(
@@ -582,13 +749,14 @@ async fn main() -> anyhow::Result<()> {
                 println!("Interpretation:              {}", ownership.interpretation);
             }
         }
-        Commands::Sbom { path } => {
-            let (files, _, _, _, _) = scan_repository(&path)?;
+        Commands::Sbom { target } => {
+            let repo = resolve_repository(&target)?;
+            let (files, _, _, _, _) = scan_repository(&repo.path)?;
             let mut components = Vec::new();
             for f in &files {
                 components.push(SbomComponent {
                     name: f.relative_path.clone(),
-                    version: "0.1.0".to_string(),
+                    version: "1.0.1".to_string(),
                     ecosystem: format!("{:?}", f.language),
                     license: Some("MIT".to_string()),
                     purl: None,
@@ -662,12 +830,14 @@ fn scan_repository(
 
 async fn run_analysis(path: &Path, json_output: bool) -> anyhow::Result<()> {
     let start = Instant::now();
-    println!(
-        "{}",
-        "SENTRIX Software Intelligence Engine — Scanning Repository..."
-            .bold()
-            .cyan()
-    );
+    if !json_output {
+        println!(
+            "{}",
+            "SENTRIX Software Intelligence Engine - Scanning Repository..."
+                .bold()
+                .cyan()
+        );
+    }
 
     let (files, graph, findings, hotspots, comp) = scan_repository(path)?;
     let arch = ArchitectureEngine::discover(&files);

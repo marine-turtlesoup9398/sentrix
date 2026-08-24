@@ -1,0 +1,50 @@
+{
+  "product": "SENTRIX - Software Intelligence & Engineering Risk Explorer",
+  "version": "1.0.1",
+  "commit_sha": "PENDING_COMMIT",
+  "github_repo_url": "https://github.com/pingsaketchoudhary/sentrix",
+  "github_release_url": "https://github.com/pingsaketchoudhary/sentrix/releases/tag/v1.0.1",
+  "release_status": "APPROVED FOR RELEASE WITH DOCUMENTED LIMITATIONS",
+  "certification_timestamp": "2026-08-24T18:16:00Z",
+  "quality_gates": {
+    "cargo_fmt": "PASS",
+    "cargo_check": "PASS",
+    "cargo_test": "PASS",
+    "cargo_clippy": "PASS",
+    "cargo_build_release": "PASS",
+    "frontend_build": "PASS"
+  },
+  "tests_summary": {
+    "total_executed": 43,
+    "passed": 43,
+    "failed": 0,
+    "ignored": 0,
+    "pass_rate": "100%"
+  },
+  "release_artifact": {
+    "binary_path": "target/release/sentrix",
+    "archive_name": "sentrix-v1.0.1-x86_64-unknown-linux-gnu.tar.gz",
+    "target_triple": "x86_64-unknown-linux-gnu",
+    "binary_sha256": "cd6449036827cfb2871ae2c2f6e322f837d14a80adc2651bfe28c66975ab8a54",
+    "archive_sha256": "ddad542f3fa892d8c9075d57c0cc34c18ed79e613ec17777ef101f5f5b5e5839"
+  },
+  "real_target_benchmark": {
+    "target_url": "https://github.com/pingsaketchoudhary/pingsaketchoudhary.github.io",
+    "total_files": 105,
+    "lines_of_code": 15673,
+    "total_functions": 23,
+    "graph_nodes": 302,
+    "graph_edges": 477,
+    "initial_analysis_ms": 199,
+    "incremental_analysis_ms": 1,
+    "cache_hit_ms": 0,
+    "architecture_pattern": "StaticSite"
+  },
+  "platform_matrix": {
+    "x86_64-unknown-linux-gnu": "VERIFIED",
+    "aarch64-unknown-linux-gnu": "BUILD NOT VERIFIED",
+    "aarch64-apple-darwin": "BUILD NOT VERIFIED",
+    "x86_64-apple-darwin": "BUILD NOT VERIFIED",
+    "x86_64-pc-windows-msvc": "BUILD NOT VERIFIED"
+  }
+}

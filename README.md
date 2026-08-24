@@ -91,10 +91,10 @@ Download the official release archive from GitHub:
 
 ```bash
 # Download release archive
-curl -LO https://github.com/pingsaketchoudhary/sentrix/releases/download/v1.0.0/sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz
+curl -LO https://github.com/pingsaketchoudhary/sentrix/releases/download/v1.0.1/sentrix-v1.0.1-x86_64-unknown-linux-gnu.tar.gz
 
 # Extract binary
-tar -xzf sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz
+tar -xzf sentrix-v1.0.1-x86_64-unknown-linux-gnu.tar.gz
 
 # Install binary to /usr/local/bin
 sudo install -m 0755 sentrix /usr/local/bin/sentrix
@@ -320,11 +320,11 @@ This recorded benchmark serves as a single target reference measurement and is n
 
 ## Release Verification and Checksums
 
-- Release Version: 1.0.0
-- GitHub Release: https://github.com/pingsaketchoudhary/sentrix/releases/tag/v1.0.0
-- Release Archive: `sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz`
-- Archive SHA-256 Checksum: `ffd797de677ac624c278470cd44676714c642da804f243d571b725930a8a6b37`
-- Binary SHA-256 Checksum: `f79aac3b2670718d76d8e80716898e3ca2a79e866603d86d51a85d3a9d84913c`
+- Release Version: 1.0.1
+- GitHub Release: https://github.com/pingsaketchoudhary/sentrix/releases/tag/v1.0.1
+- Release Archive: `sentrix-v1.0.1-x86_64-unknown-linux-gnu.tar.gz`
+- Archive SHA-256 Checksum: `ddad542f3fa892d8c9075d57c0cc34c18ed79e613ec17777ef101f5f5b5e5839`
+- Binary SHA-256 Checksum: `cd6449036827cfb2871ae2c2f6e322f837d14a80adc2651bfe28c66975ab8a54`
 
 ---
 

@@ -18,23 +18,23 @@ jobs:
         include:
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
-            artifact_name: sentrix-v1.0.0-x86_64-unknown-linux-gnu.tar.gz
+            artifact_name: sentrix-v1.0.1-x86_64-unknown-linux-gnu.tar.gz
             asset_name: sentrix
           - target: aarch64-unknown-linux-gnu
             os: ubuntu-latest
-            artifact_name: sentrix-v1.0.0-aarch64-unknown-linux-gnu.tar.gz
+            artifact_name: sentrix-v1.0.1-aarch64-unknown-linux-gnu.tar.gz
             asset_name: sentrix
           - target: aarch64-apple-darwin
             os: macos-latest
-            artifact_name: sentrix-v1.0.0-aarch64-apple-darwin.tar.gz
+            artifact_name: sentrix-v1.0.1-aarch64-apple-darwin.tar.gz
             asset_name: sentrix
           - target: x86_64-apple-darwin
             os: macos-13
-            artifact_name: sentrix-v1.0.0-x86_64-apple-darwin.tar.gz
+            artifact_name: sentrix-v1.0.1-x86_64-apple-darwin.tar.gz
             asset_name: sentrix
           - target: x86_64-pc-windows-msvc
             os: windows-latest
-            artifact_name: sentrix-v1.0.0-x86_64-pc-windows-msvc.zip
+            artifact_name: sentrix-v1.0.1-x86_64-pc-windows-msvc.zip
             asset_name: sentrix.exe
 
     steps:

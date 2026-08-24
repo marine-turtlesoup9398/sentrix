@@ -18,11 +18,11 @@ members = [
 ]
 
 [workspace.package]
-version = "0.1.0"
+version = "1.0.1"
 edition = "2021"
-authors = ["SENTRIX Core Team"]
+authors = ["Saket Choudhary <pingsaketchoudhary@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/sentrix-ai/sentrix"
+repository = "https://github.com/pingsaketchoudhary/sentrix"
 
 [workspace.dependencies]
 tokio = { version = "1.43.0", features = ["full"] }

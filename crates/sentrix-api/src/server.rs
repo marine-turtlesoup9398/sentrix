@@ -41,6 +41,7 @@ impl ApiServer {
             .allow_headers(Any);
 
         let mut app = Router::new()
+            .route("/api/status", get(handle_overview))
             .route("/api/overview", get(handle_overview))
             .route("/api/graph", get(handle_graph))
             .route("/api/hotspots", get(handle_hotspots))
@@ -76,19 +77,44 @@ impl ApiServer {
             .parse()
             .map_err(|e| sentrix_core::SentrixError::Api(format!("Invalid address: {}", e)))?;
 
-        println!(
-            "SENTRIX Unified Intelligence API Server running at http://{}",
-            addr
-        );
+        println!("\nSENTRIX Web Dashboard & REST API");
+        println!("Server running at http://{}", addr);
+        println!("API status:       http://{}/api/status", addr);
+        println!("Press Ctrl+C to stop.\n");
 
         let listener = tokio::net::TcpListener::bind(addr)
             .await
             .map_err(|e| sentrix_core::SentrixError::Api(e.to_string()))?;
 
         axum::serve(listener, app)
+            .with_graceful_shutdown(shutdown_signal())
             .await
             .map_err(|e| sentrix_core::SentrixError::Api(e.to_string()))?;
 
         Ok(())
+    }
+}
+
+async fn shutdown_signal() {
+    let ctrl_c = async {
+        tokio::signal::ctrl_c()
+            .await
+            .expect("Failed to install Ctrl+C handler");
+    };
+
+    #[cfg(unix)]
+    let terminate = async {
+        tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
+            .expect("Failed to install SIGTERM handler")
+            .recv()
+            .await;
+    };
+
+    #[cfg(not(unix))]
+    let terminate = std::future::pending::<()>();
+
+    tokio::select! {
+        _ = ctrl_c => {},
+        _ = terminate => {},
     }
 }
